@@ -14,8 +14,109 @@ namespace ProjEventWeb
             _context = context;
         }
 
-        //     //GET
-        //     [HttpGet]
-        //     public async Task
+        //GET
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<UserProfile>>> GetAll()
+        {
+            try
+            {
+                var result = await _context.Users.ToListAsync();
+                if (result.Any())
+                {
+                    return result;
+                }
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        //GET
+        [HttpGet("{Id}")]
+
+        public async Task<ActionResult<UserProfile>> GetUser(int Id)
+        {
+            try
+            {
+                var result = await _context.Users.FIndAsync(Id);
+                if (result != null)
+                {
+                    return result;
+                }
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        //POST
+        [HttpPost]
+        public async<Task<ActionResult>> POST(UserProfile user)
+        {
+            try
+            {
+                _context.Users.Add(user);
+                await _context.SaveChangesAsync();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
+
+        //UPDATE
+        [HttpPut]
+
+        public async Task<ActionResult> PUT([FromBody] User user)
+        {
+            try
+            {
+                var getUser = await _context.Users.FindAsync(user.id);
+                if (getUser != null)
+                {
+                    _context.Users.Update(user);
+                    await _context.SaveChangesAsync();
+                    return Ok();
+                }
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        //DELETE
+        [HttpDelete("{Id}")]
+
+        public async Task<ActionResult> Delete(int Id)
+        {
+            try
+            {
+                var dlt = await _context.Users.FindAsync(Id);
+                if (dlt != null)
+                {
+                    _context.Users.RemoveRange(dlt);
+                    await _context.SaveChanges();
+                    return Ok();
+                }
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
     }
 }
