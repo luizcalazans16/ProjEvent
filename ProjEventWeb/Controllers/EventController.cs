@@ -39,7 +39,7 @@ namespace ProjEventWeb
 
         // GET BY ID
         [HttpGet("{Id}")]
-        public async Task<ActionResult<Event>> GetEvent(int Id)
+        public async Task<ActionResult<Event>> getEvent(int Id)
         {
             try
             {
