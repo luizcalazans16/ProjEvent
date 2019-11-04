@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ProjEventWeb.Models;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,9 +11,9 @@ namespace ProjEventWeb.Controllers
 {
     public class CupomController : ControllerBase
     {
-        public readonly ProjEventWeb _context;
+        public readonly ProjEventDbContext _context;
 
-        public CupomController(ProjEventWeb context)
+        public CupomController(ProjEventDbContext context)
         {
             _context = context;
         }
@@ -59,10 +60,10 @@ namespace ProjEventWeb.Controllers
 
         //POST
         [HttpPost]
-        public async Task<ActionResult> Post(Cupom cupom) {
+        public async Task<ActionResult> Post(Cupom cupons) {
             try
             {
-                _context.Cupons.Add(cupom);
+                _context.Cupons.Add(cupons);
                 await _context.SaveChangesAsync();
                 return Ok();
             }

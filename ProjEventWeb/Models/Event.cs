@@ -1,7 +1,7 @@
 using System;
 
 namespace ProjEventWeb.Models {
-    public class Events {
+    public class Event {
         public int Id { get; set;}
         public string Description {get; set;}
         public string Price {get;set;}

@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using ProjEventWeb.Models;
+
 
 namespace ProjEventWeb.Models
 {

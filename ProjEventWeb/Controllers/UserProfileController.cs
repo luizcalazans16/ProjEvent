@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ProjEventWeb.Models;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -42,7 +43,7 @@ namespace ProjEventWeb.Controllers
         {
             try
             {
-                var result = await _context.Users.FIndAsync(Id);
+                var result = await _context.Users.FindAsync(Id);
                 if (result != null)
                 {
                     return result;
@@ -58,7 +59,7 @@ namespace ProjEventWeb.Controllers
 
         //POST
         [HttpPost]
-        public async<Task<ActionResult>> POST(UserProfile user)
+        public async Task<ActionResult> POST(UserProfile user)
         {
             try
             {
@@ -77,11 +78,11 @@ namespace ProjEventWeb.Controllers
         //UPDATE
         [HttpPut]
 
-        public async Task<ActionResult> PUT([FromBody] User user)
+        public async Task<ActionResult> Put([FromBody]UserProfile user)
         {
             try
             {
-                var getUser = await _context.Users.FindAsync(user.id);
+                var getUser = await _context.Users.FindAsync(user.Id);
                 if (getUser != null)
                 {
                     _context.Users.Update(user);
@@ -108,7 +109,7 @@ namespace ProjEventWeb.Controllers
                 if (dlt != null)
                 {
                     _context.Users.RemoveRange(dlt);
-                    await _context.SaveChanges();
+                    await _context.SaveChangesAsync();
                     return Ok();
                 }
                 return NotFound();
