@@ -9,6 +9,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ProjEventWeb.Controllers
 {
+    [Controller]
+    [Route("api/[controller]")]
 
     public class EventController : ControllerBase
     {
@@ -20,6 +22,7 @@ namespace ProjEventWeb.Controllers
 
         //GET
         [HttpGet]
+
         public async Task<ActionResult<IEnumerable<Event>>> GetAll()
         {
             try
@@ -78,11 +81,13 @@ namespace ProjEventWeb.Controllers
 
         //UPDATE
         [HttpPut]
-        public async Task<ActionResult> Put([FromBody] Event events) {
+        public async Task<ActionResult> Put([FromBody] Event events)
+        {
             try
             {
                 var getEvent = await _context.Events.FindAsync(events.Id);
-                if (getEvent != null) {
+                if (getEvent != null)
+                {
                     _context.Events.Update(events);
                     await _context.SaveChangesAsync();
                     return Ok();
@@ -91,12 +96,12 @@ namespace ProjEventWeb.Controllers
             }
             catch (Exception ex)
             {
-                
+
                 throw ex;
             }
         }
 
-        
+
 
     }
 }

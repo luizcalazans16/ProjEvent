@@ -39,7 +39,7 @@ namespace ProjEventWeb.Controllers
         //GET
         [HttpGet("{Id}")]
 
-        public async Task<ActionResult<UserProfile>> GetUser(int Id)
+        public async Task<ActionResult<UserProfile>> getUser(int Id)
         {
             try
             {
