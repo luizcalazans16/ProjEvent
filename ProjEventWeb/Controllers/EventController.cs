@@ -4,8 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
-namespace ProjEventWeb
+namespace ProjEventWeb.Controllers
 {
 
     public class EventController : ControllerBase
@@ -18,7 +19,7 @@ namespace ProjEventWeb
 
         //GET
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Event>>> GetAll()
+        public async Task<ActionResult<IEnumerable<Events>>> GetAll()
         {
             try
             {
@@ -39,11 +40,11 @@ namespace ProjEventWeb
 
         // GET BY ID
         [HttpGet("{Id}")]
-        public async Task<ActionResult<Event>> getEvent(int Id)
+        public async Task<ActionResult<Events>> getEvent(int Id)
         {
             try
             {
-                var result = await _context.Event.FindAsync(Id);
+                var result = await _context.Events.FindAsync(Id);
                 if (result != null)
                 {
                     return result;
@@ -58,11 +59,11 @@ namespace ProjEventWeb
 
         }
         [HttpPost]
-        public async Task<ActionResult> POST(Event events)
+        public async Task<ActionResult> POST(Events events)
         {
             try
             {
-                _context.Event.Add(events);
+                _context.Events.Add(events);
                 await _context.SaveChangesAsync();
                 return Ok();
             }
@@ -76,13 +77,13 @@ namespace ProjEventWeb
 
         //UPDATE
         [HttpPut]
-        public async Task<ActionResult> Put([FromBody] EventArgs events) {
+        public async Task<ActionResult> Put([FromBody] Events events) {
             try
             {
-                var getEvent = await _context.Event.FindAsync(events.Id);
+                var getEvent = await _context.Events.FindAsync(events.Id);
                 if (getEvent != null) {
-                    _context.Event.Update(events);
-                    await _context.Event.SaveChangesAsync();
+                    _context.Events.Update(events);
+                    await _context.Events.SaveChangesAsync();
                     return Ok();
                 }
                 return NotFound();

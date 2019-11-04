@@ -4,7 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-namespace ProjEventWeb
+using Microsoft.EntityFrameworkCore;
+namespace ProjEventWeb.Controllers
 {
     public class UserProfileController : ControllerBase
     {
