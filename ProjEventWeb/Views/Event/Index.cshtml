@@ -1,0 +1,70 @@
+@model ProjEventWeb.Models.EventCategoryViewModel
+
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Cadastro de Eventos</h1>
+
+<p>
+    <a asp-action="Create">Inserir novo evento </a>
+</p>
+<form asp-controller="Event" asp-action="Index" method="get">
+    <p>
+        <select asp-for="EventCategory" asp-items="Model.Categories">
+            <option value="">All</option>
+        </select>
+        Evento: <input type="text" asp-for="SearchString" />
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Events[0].Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Events[0].Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Events[0].Category)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Events[0].Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Events[0].Details)
+            </th> 
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Events) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Details)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

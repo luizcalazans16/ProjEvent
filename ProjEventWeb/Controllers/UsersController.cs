@@ -1,86 +1,93 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using ProjEventWeb.Models;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using ProjEventWeb.Models;
+
 namespace ProjEventWeb.Controllers
 {
-    public class UserProfileController : Controller
+    public class UsersController : Controller
     {
         private readonly ProjEventDbContext _context;
-        public UserProfileController(ProjEventDbContext context)
+
+        public UsersController(ProjEventDbContext context)
         {
             _context = context;
         }
 
-        //GET: UserProfile
+        // GET: Users
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Users.ToListAsync());
+            return View(await _context.Events.ToListAsync());
         }
 
-        // GET: UserProfile/Details/5
+        // GET: Users/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-            var user = await _context.Users
-                .FirstOrDefaultAsync(u => u.Id == id);
-            if (user == null)
+
+            var @event = await _context.Events
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (@event == null)
             {
                 return NotFound();
             }
-            return View(user);
+
+            return View(@event);
         }
 
-        //GET: UserProfile/Create
+        // GET: Users/Create
         public IActionResult Create()
         {
             return View();
         }
 
+        // POST: Users/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(
-            [Bind("Id,Name,Email,PhoneNumber,CPF,SubscriptionType,Gender,Password,Course,Administrator")]UserProfile user)
+        public async Task<IActionResult> Create([Bind("Id,Description,Price,Date,Category,Details")] Event @event)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(user);
+                _context.Add(@event);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(user);
+            return View(@event);
         }
 
-        //GET: UserProfile/Edit/5
+        // GET: Users/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-            var user = await _context.Users.FindAsync(id);
-            if (user == null)
+
+            var @event = await _context.Events.FindAsync(id);
+            if (@event == null)
             {
                 return NotFound();
             }
-            return View(user);
+            return View(@event);
         }
 
-        //POST: UserProfile/Edit/5
+        // POST: Users/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id,
-        [Bind("Id,Name,Email,PhoneNumber,CPF,SubscriptionType,Gender,Password,Course,Administrator")] UserProfile user)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Description,Price,Date,Category,Details")] Event @event)
         {
-            if (id != user.Id)
+            if (id != @event.Id)
             {
                 return NotFound();
             }
@@ -89,27 +96,26 @@ namespace ProjEventWeb.Controllers
             {
                 try
                 {
-                    _context.Update(user);
+                    _context.Update(@event);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!UserProfileExists(user.Id))
+                    if (!EventExists(@event.Id))
                     {
                         return NotFound();
                     }
                     else
                     {
-
                         throw;
                     }
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(user);
+            return View(@event);
         }
 
-        //GET: UserProfile/Delete/5
+        // GET: Users/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -117,31 +123,30 @@ namespace ProjEventWeb.Controllers
                 return NotFound();
             }
 
-            var user = await _context.Users
+            var @event = await _context.Events
                 .FirstOrDefaultAsync(m => m.Id == id);
-
-            if (user == null)
+            if (@event == null)
             {
                 return NotFound();
             }
-            return View(user);
+
+            return View(@event);
         }
 
-        //POST: UserProfile
+        // POST: Users/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var user = await _context.Users.FindAsync(id);
-            _context.Users.Remove(user);
+            var @event = await _context.Events.FindAsync(id);
+            _context.Events.Remove(@event);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool UserProfileExists(int id)
+        private bool EventExists(int id)
         {
-            return _context.Users.Any(u => u.Id == id);
+            return _context.Events.Any(e => e.Id == id);
         }
-
     }
 }

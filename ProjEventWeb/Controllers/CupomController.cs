@@ -9,13 +9,17 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ProjEventWeb.Controllers
 {
-    public class CupomController : ControllerBase
+    public class CupomController : Controller
     {
         public readonly ProjEventDbContext _context;
 
         public CupomController(ProjEventDbContext context)
         {
             _context = context;
+        }
+        public IActionResult Index()
+        {
+            return View();
         }
 
         //GET 

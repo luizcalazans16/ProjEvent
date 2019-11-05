@@ -6,109 +6,169 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ProjEventWeb.Controllers
 {
-    [Controller]
-    [Route("api/[controller]")]
-
-    public class EventController : ControllerBase
+    public class EventController : Controller
     {
+
         private readonly ProjEventDbContext _context;
         public EventController(ProjEventDbContext context)
         {
             _context = context;
         }
 
-        //GET
-        [HttpGet]
-
-        public async Task<ActionResult<IEnumerable<Event>>> GetAll()
+        public async Task<IActionResult> Index(string eventCategory, string searchString)
         {
-            try
+            IQueryable<string> categoryQuery = from m in _context.Events
+                                               orderby m.Category
+                                               select m.Category;
+            var @event = from m in _context.Events
+                         select m;
+
+            if (!string.IsNullOrEmpty(searchString))
             {
-                var result = await _context.Events.ToListAsync();
-                if (result.Any())
-                {
-                    return result;
-                }
-                return NotFound();
+                @event = @event.Where(s => s.Description.Contains(searchString));
             }
-            catch (Exception ex)
+            if (!string.IsNullOrEmpty(eventCategory))
             {
-                throw ex;
-            }
-        }
-
-
-
-        // GET BY ID
-        [HttpGet("{Id}")]
-        public async Task<ActionResult<Event>> getEvent(int Id)
-        {
-            try
-            {
-                var result = await _context.Events.FindAsync(Id);
-                if (result != null)
-                {
-                    return result;
-                }
-                return NotFound();
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
+                @event = @event.Where(x => x.Category == eventCategory);
             }
 
+            var eventCategoryVM = new EventCategoryViewModel {
+                Categories = new SelectList(await categoryQuery.Distinct().ToListAsync()),
+                Events = await @event.ToListAsync()
+            };
+            return View(eventCategoryVM);
+            // var @event = from m in _context.Events
+            //             select m;
+
+            // if (!String.IsNullOrEmpty(searchString)){
+            //     @event = @event.Where(s => s.Description.Contains(searchString));
+            // }                       
+            // return View(await @event.ToListAsync());
         }
         [HttpPost]
-        public async Task<ActionResult> POST(Event events)
+        public string Index(string searchString, bool notUsed)
         {
-            try
-            {
-                _context.Events.Add(events);
-                await _context.SaveChangesAsync();
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
-
+            return "From [HttpPost]Index: filter on" + searchString;
         }
 
-        //UPDATE
-        [HttpPut]
-        public async Task<ActionResult> Put([FromBody] Event events)
+        //GET: Event/Details/5
+        public async Task<IActionResult> Details(int? id)
         {
-            try
+            if (id == null)
             {
-                var getEvent = await _context.Events.FindAsync(events.Id);
-                if (getEvent != null)
-                {
-                    _context.Events.Update(events);
-                    await _context.SaveChangesAsync();
-                    return Ok();
-                }
                 return NotFound();
             }
-            catch (Exception ex)
+            var @event = await _context.Events
+                .FirstOrDefaultAsync(e => e.Id == id);
+            if (@event == null)
             {
-
-                throw ex;
+                return NotFound();
             }
+            return View(@event);
         }
 
+        //GET: Event/Create
+        public IActionResult Create()
+        {
+            return View();
+        }
 
+        //POST: Event/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Id,Description,Price,Date,Details")] Event @event)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(@event);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(@event);
+        }
 
+        //GET: Event/Edit/5
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var @event = await _context.Events.FindAsync(id);
+            if (@event == null)
+            {
+                return NotFound();
+            }
+            return View(@event);
+        }
+
+        //POST: Event/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Description,Price,Date,Details")] Event @event)
+        {
+            if (id != @event.Id)
+            {
+                return NotFound();
+            }
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(@event);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!EventExists(@event.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(@event);
+        }
+
+        //GET: Event/Delete/5
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var @event = await _context.Events
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (@event == null)
+            {
+                return NotFound();
+            }
+            return View(@event);
+        }
+
+        //POST: Event/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var @event = await _context.Events.FindAsync(id);
+            _context.Events.Remove(@event);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        private bool EventExists(int id)
+        {
+            return _context.Events.Any(e => e.Id == id);
+        }
     }
 }
-
-
-
-
-
-
-
