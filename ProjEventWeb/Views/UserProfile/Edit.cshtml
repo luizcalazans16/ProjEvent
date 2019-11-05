@@ -1,4 +1,4 @@
-@model ProjEventWeb.Models.Event
+@model ProjEventWeb.Models.UserProfile
 
 @{
     ViewData["Title"] = "Edit";
@@ -6,7 +6,7 @@
 
 <h1>Edit</h1>
 
-<h4>Event</h4>
+<h4>UserProfile</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -14,29 +14,49 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" class="form-control" />
-                <span asp-validation-for="Price" class="text-danger"></span>
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Date" class="control-label"></label>
-                <input asp-for="Date" class="form-control" />
-                <span asp-validation-for="Date" class="text-danger"></span>
+                <label asp-for="PhoneNumber" class="control-label"></label>
+                <input asp-for="PhoneNumber" class="form-control" />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Category" class="control-label"></label>
-                <input asp-for="Category" class="form-control" />
-                <span asp-validation-for="Category" class="text-danger"></span>
+                <label asp-for="CPF" class="control-label"></label>
+                <input asp-for="CPF" class="form-control" />
+                <span asp-validation-for="CPF" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Details" class="control-label"></label>
-                <input asp-for="Details" class="form-control" />
-                <span asp-validation-for="Details" class="text-danger"></span>
+                <label asp-for="SubscriptionType" class="control-label"></label>
+                <input asp-for="SubscriptionType" class="form-control" />
+                <span asp-validation-for="SubscriptionType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Gender" class="control-label"></label>
+                <input asp-for="Gender" class="form-control" />
+                <span asp-validation-for="Gender" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Course" class="control-label"></label>
+                <input asp-for="Course" class="form-control" />
+                <span asp-validation-for="Course" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Administrator" /> @Html.DisplayNameFor(model => model.Administrator)
+                </label>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
