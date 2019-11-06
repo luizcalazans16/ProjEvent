@@ -7,6 +7,7 @@ namespace ProjEventWeb.Models
         public int Id { get; set; }
         public string Description { get; set; }
         public DateTime Validity { get; set; }
+        public double Discount { get; set; }
 
     }
 }

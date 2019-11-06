@@ -34,7 +34,8 @@ namespace ProjEventWeb.Models
                         Date = DateTime.Parse("2019-10-13"),
                         Details = "Technology Event",
                         Price = 10.99M
-                    }                     
+                    }
+                                       
                 );
                 context.SaveChanges();
             }
