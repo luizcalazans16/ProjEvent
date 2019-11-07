@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace ProjEventWeb.Models
 {
@@ -14,6 +15,8 @@ namespace ProjEventWeb.Models
         public  string Password {get; set;}
         public string Course {get; set;}
         public bool Administrator {get; set;}
+
+        public virtual ICollection<UserEvent> UserEvents { get; set; }
     }
 
 }
