@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ProjEventWeb.Models
 {
@@ -15,7 +16,7 @@ namespace ProjEventWeb.Models
         public  string Password {get; set;}
         public string Course {get; set;}
         public bool Administrator {get; set;}
-
+        [NotMapped]
         public virtual ICollection<UserEvent> UserEvents { get; set; }
     }
 
