@@ -5,10 +5,10 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Cadastro de Eventos</h1>
+<h1>Cadastro de Atividades</h1>
 
 <p>
-    <a asp-action="Create">Inserir novo evento </a>
+    <a asp-action="Create">Inserir nova atividade </a>
 </p>
 <form asp-controller="Event" asp-action="Index" method="get">
     <p>
@@ -24,19 +24,19 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Events[0].Description)
+                Descrição
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Events[0].Date)
+                Data
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Events[0].Category)
+                Tipo de atividade
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Events[0].Price)
+                Preço
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Events[0].Details)
+                Detalhes
             </th> 
             <th></th>
         </tr>
