@@ -19,9 +19,24 @@ namespace ProjEventWeb.Controllers
         }
 
         // GET: Selling
-        public async Task<IActionResult> Index()
-        {
-            return View(await _context.UserEvent.ToListAsync());
+        // public async Task<IActionResult> Index()
+        // {
+        //     return View(await _context.UserEvent.ToListAsync());
+        // }
+
+        private ProjEventDbContext db = new ProjEventDbContext();
+        //GET
+        public ActionResult Index() {
+            try
+            {
+                var Events = db.Events.ToListAsync();
+                return View(Events);
+            }
+            catch (System.Exception)
+            {
+                
+                throw;
+            }
         }
 
         // GET: Selling/Details/5
