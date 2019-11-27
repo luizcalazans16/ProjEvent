@@ -18,25 +18,15 @@ namespace ProjEventWeb.Controllers
             _context = context;
         }
 
-        // GET: Selling
-        // public async Task<IActionResult> Index()
-        // {
-        //     return View(await _context.UserEvent.ToListAsync());
-        // }
-
-        private ProjEventDbContext db = new ProjEventDbContext();
-        //GET
-        public ActionResult Index() {
-            try
-            {
-                var Events = db.Events.ToListAsync();
-                return View(Events);
-            }
-            catch (System.Exception)
-            {
-                
-                throw;
-            }
+        //GET: Selling
+        public async Task<IActionResult> Index()
+        {
+            var @event = from m in _context.Events
+                            select m;
+            var x = new EventCategoryViewModel {
+                Events = await @event.ToListAsync()
+            };
+            return View(x);
         }
 
         // GET: Selling/Details/5
@@ -47,14 +37,14 @@ namespace ProjEventWeb.Controllers
                 return NotFound();
             }
 
-            var userEvent = await _context.UserEvent
+            var y = await _context.Events
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (userEvent == null)
+            if (y == null)
             {
                 return NotFound();
             }
 
-            return View(userEvent);
+            return View(y);
         }
 
         // GET: Selling/Create
