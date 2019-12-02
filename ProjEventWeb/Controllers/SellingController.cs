@@ -53,12 +53,12 @@ namespace ProjEventWeb.Controllers
             return View();
         }
 
-        //POST
-        public ActionResult BuyTicket() {
-            var sell = new UserEvent();
-            var x = EventId;
+        // //POST
+        // public ActionResult BuyTicket() {
+        //     var sell = new UserEvent();
+        //     var x = EventId;
 
-        }
+        // }
 
 
 
@@ -129,6 +129,20 @@ namespace ProjEventWeb.Controllers
             }
             return View(userEvent);
         }
+
+        //POST: VENDA
+        public ActionResult BuyTicket() {
+            var ticketSelling = new UserEvent();
+            //ticketSelling.UserId = 
+            //ticketSelling.EventId =
+            //ticketSelling.Payment = 
+            //ticketSelling.Certificate = 
+            ticketSelling.Date = DateTime.Now;
+            ticketSelling.Quantity = 
+            return View();
+        }
+
+
 
         // GET: Selling/Delete/5
         public async Task<IActionResult> Delete(int? id)

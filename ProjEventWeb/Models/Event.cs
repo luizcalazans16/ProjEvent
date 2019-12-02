@@ -7,6 +7,7 @@ namespace ProjEventWeb.Models {
         public decimal Price {get;set;}
         public DateTime Date {get; set;}
         public string Category {get; set;}
-        public string Details {get; set;}        
+        public string Details {get; set;}    
+        public int Quantity {get; set;}    
     }
 }

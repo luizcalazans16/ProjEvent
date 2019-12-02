@@ -80,7 +80,7 @@ namespace ProjEventWeb.Controllers
         //POST: Event/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Description,Price,Date,Details")] Event @event)
+        public async Task<IActionResult> Create([Bind("Id,Description,Price,Date,Details, Quantity")] Event @event)
         {
             if (ModelState.IsValid)
             {
@@ -109,7 +109,7 @@ namespace ProjEventWeb.Controllers
         //POST: Event/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Description,Price,Date,Category,Details")] Event @event)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Description,Price,Date,Category,Details, Quantity")] Event @event)
         {
             if (id != @event.Id)
             {
