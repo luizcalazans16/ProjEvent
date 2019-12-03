@@ -44,9 +44,10 @@
 
             <td>
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-              <form> action= "http://localhost:5001/Selling/Tickets"> 
-                  <input type="submit" value="Comprar entrada" />
-              </form>        
+                
+              <form>
+         <input type="button" onclick="window.location.href = 'http://localhost:5001/Selling/TicketPurchase'"; value="Comprar entrada"/>
+      </form>
             </td>
         </tr>
 }

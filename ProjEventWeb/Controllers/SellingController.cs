@@ -53,6 +53,12 @@ namespace ProjEventWeb.Controllers
             return View();
         }
 
+        //get
+        public IActionResult TicketPurchase() {
+            return View();
+        }
+
+
         // //POST
         // public ActionResult BuyTicket() {
         //     var sell = new UserEvent();
