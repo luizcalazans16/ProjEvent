@@ -131,16 +131,16 @@ namespace ProjEventWeb.Controllers
         }
 
         //POST: VENDA
-        public ActionResult BuyTicket() {
-            var ticketSelling = new UserEvent();
-            //ticketSelling.UserId = 
-            //ticketSelling.EventId =
-            //ticketSelling.Payment = 
-            //ticketSelling.Certificate = 
-            ticketSelling.Date = DateTime.Now;
-            ticketSelling.Quantity = 
-            return View();
-        }
+        // public ActionResult BuyTicket() {
+        //     var ticketSelling = new UserEvent();
+        //     //ticketSelling.UserId = 
+        //     //ticketSelling.EventId =
+        //     //ticketSelling.Payment = 
+        //     //ticketSelling.Certificate = 
+        //     ticketSelling.Date = DateTime.Now;
+        //     ticketSelling.Quantity = 
+        //     return View();
+        // }
 
 
 
