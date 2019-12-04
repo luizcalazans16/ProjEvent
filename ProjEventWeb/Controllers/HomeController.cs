@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using ProjEventWeb.Models;
 
 namespace ProjEventWeb.Controllers
@@ -20,7 +22,17 @@ namespace ProjEventWeb.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var session = HttpContext.Session.GetString("Usuario");
+            if(session != null){
+                var usuario = JsonConvert.DeserializeObject<UserProfile>(session);
+                if(usuario.Administrator){
+                    return RedirectToAction("","Administrator",null);
+                }
+                else{
+                    return RedirectToAction("","UserContext",null);
+                }
+            }
+            return RedirectToAction("","Login",null);
         }
 
         public IActionResult Privacy()

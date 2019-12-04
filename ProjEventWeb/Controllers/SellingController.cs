@@ -22,8 +22,9 @@ namespace ProjEventWeb.Controllers
         public async Task<IActionResult> Index()
         {
             var @event = from m in _context.Events
-                            select m;
-            var x = new EventCategoryViewModel {
+                         select m;
+            var x = new EventCategoryViewModel
+            {
                 Events = await @event.ToListAsync()
             };
             return View(x);
@@ -53,21 +54,12 @@ namespace ProjEventWeb.Controllers
             return View();
         }
 
-        //get
-        public IActionResult TicketPurchase() {
-            return View();
+
+        public IActionResult BuyTicket([Bind("EventId","Payment","Certificate")] UserEvent uservent)
+        {
+            _context.Add(uservent);
+            return RedirectToAction("", "RegisterUser", null);
         }
-
-
-        // //POST
-        // public ActionResult BuyTicket() {
-        //     var sell = new UserEvent();
-        //     var x = EventId;
-
-        // }
-
-
-
 
         // POST: Selling/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -136,18 +128,20 @@ namespace ProjEventWeb.Controllers
             return View(userEvent);
         }
 
-        //POST: VENDA
-        // public ActionResult BuyTicket() {
-        //     var ticketSelling = new UserEvent();
-        //     //ticketSelling.UserId = 
-        //     //ticketSelling.EventId =
-        //     //ticketSelling.Payment = 
-        //     //ticketSelling.Certificate = 
-        //     ticketSelling.Date = DateTime.Now;
-        //     ticketSelling.Quantity = 
-        //     return View();
-        // }
-
+        public async Task<IActionResult> TicketPurchase(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var @event = await _context.Events
+                        .FirstOrDefaultAsync(e => e.Id == id);
+            if (@event == null)
+            {
+                return NotFound();
+            }
+            return View(@event);
+        }
 
 
         // GET: Selling/Delete/5

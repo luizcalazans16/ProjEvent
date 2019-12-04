@@ -4,61 +4,135 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
-<h4>Novo Cadastro</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PhoneNumber" class="control-label"></label>
-                <input asp-for="PhoneNumber" class="form-control" />
-                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CPF" class="control-label"></label>
-                <input asp-for="CPF" class="form-control" />
-                <span asp-validation-for="CPF" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SubscriptionType" class="control-label"></label>
-                <input asp-for="SubscriptionType" class="form-control" />
-                <span asp-validation-for="SubscriptionType" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Gender" class="control-label"></label>
-                <input asp-for="Gender" class="form-control" />
-                <span asp-validation-for="Gender" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Course" class="control-label"></label>
-                <input asp-for="Course" class="form-control" />
-                <span asp-validation-for="Course" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Salvar" class="btn btn-primary"/>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: black;
+}
 
-            </div>
-        </form>
+* {
+  box-sizing: border-box;
+}
+
+/* Add padding to containers */
+.container {
+  padding: 16px;
+  background-color: white;
+}
+
+/* Full-width input fields */
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+}
+
+input[type=text]:focus, input[type=password]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+/* Overwrite default styles of hr */
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+
+/* Set a style for the submit button */
+.registerbtn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 16px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+
+.registerbtn:hover {
+  opacity: 1;
+}
+
+/* Add a blue text color to links */
+a {
+  color: dodgerblue;
+}
+
+/* Set a grey background color and center the text of the "sign in" section */
+.signin {
+  background-color: #f1f1f1;
+  text-align: center;
+}
+</style>
+</head>
+<body>
+
+<form asp-action="Create">
+  <div class="container">
+    <h2>Registre-se</h2>
+    <p>Preencha os campos abaixo para criar uma conta</p>
+    <hr>
+    <label asp-for="Name"><b>Nome Completo</b></label>
+    <input type="text" placeholder="Digite seu nome completo" name="name" required />
+    
+    <label asp-for="Email"><b>E-mail</b></label>
+    <input type="text" placeholder="Digite um e-mail" name="email" required>
+
+    <label asp-for="PhoneNumber"><b>Telefone</b></label>
+    <input type="text" placeholder="Digite um número de telefone" name="phonenumber" required />
+
+    <label asp-for="CPF"><b>CPF</b></label>
+    <input type="text" placeholder="Digite o CPF" name="cpf" required />
+
+    <label asp-for="SubscriptionType"><b>Tipo de inscrição</b></label>
+    <br/>
+    <select name="subscriptionType">
+        <option value="" disabled selected hidden>Selecione o tipo de inscrição</option>
+        <option value="Aluno">Aluno</option>
+        <option value="Professor">Professor</option>
+        <option value="Coordenador">Coordenador de curso</option>
+    </select>
+    <br/>
+    <br/>
+
+    <label asp-for="Gender"><b>Gênero</b></label>
+    <br/>
+    <select name="gender">
+        <option value="" disabled selected hidden>Selecione o gênero</option>
+        <option value="Masculino">Masculino</option>
+        <option value="Feminino">Feminino</option>
+        <option value="Outro">Outro</option>
+    </select>
+    <br/>
+    <br/>
+
+    <label asp-for="Course"><b>Curso</b></label>
+    <input type="text" placeholder="Insira o curso" name="course" required />
+
+    <label asp-for="Password"><b>Senha</b></label>
+    <input type="Password" placeholder="Insira uma senha" name="password" required />
+
+    <hr>
+    <p>Ao criar uma conta, você concorda com os <a href="#">Termos & Privacidade</a>.</p>
+    
+    <div class="form-group">
+      <input type="submit" value="Registrar" class="btn btn-primary"/>
+
     </div>
-</div>
+    
+  </div>
+</form>
+
+</body>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

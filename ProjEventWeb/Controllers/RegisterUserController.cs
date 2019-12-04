@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Newtonsoft.Json;
 
 namespace ProjEventWeb.Controllers
 {
@@ -38,8 +39,14 @@ namespace ProjEventWeb.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(user);
+            HttpContext.Session.SetString("usuario", JsonConvert.SerializeObject(user));
+            return RedirectToAction("","Home",null);
         }
+        //GET:      
+        public IActionResult GetUserEvent() {
+            return View();
+        }
+
         //GET: UserProfile/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {

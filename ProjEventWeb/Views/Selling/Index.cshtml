@@ -44,10 +44,10 @@
 
             <td>
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                
-              <form>
+                <a asp-action="TicketPurchase" asp-route-id="@item.Id">Comprar entrada</a>
+              <!-- <form>
          <input type="button" onclick="window.location.href = 'http://localhost:5001/Selling/TicketPurchase'"; value="Comprar entrada"/>
-      </form>
+      </form> -->
             </td>
         </tr>
 }
