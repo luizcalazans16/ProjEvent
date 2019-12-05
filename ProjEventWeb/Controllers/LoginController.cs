@@ -2,9 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using ProjEventWeb.Models;
 
 namespace ProjEventWeb.Controllers
@@ -35,10 +37,12 @@ namespace ProjEventWeb.Controllers
 
                 if (user == null)
                 {
+
                     return RedirectToAction("", "Login", null);
                 }
                 else
                 {
+                    HttpContext.Session.SetString("Usuario", JsonConvert.SerializeObject(user));
                     if (user.Administrator)
                     {
                         return RedirectToAction("", "Administrator", null);

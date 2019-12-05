@@ -2,9 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using ProjEventWeb.Models;
 
 namespace ProjEventWeb.Controllers
@@ -54,28 +56,30 @@ namespace ProjEventWeb.Controllers
             return View();
         }
 
-
-        public IActionResult BuyTicket([Bind("EventId","Payment","Certificate")] UserEvent uservent)
-        {
-            _context.Add(uservent);
-            return RedirectToAction("", "RegisterUser", null);
-        }
-
-        // POST: Selling/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Date,Payment,Certificate,UserId,CupomId,EventId,Quantity")] UserEvent userEvent)
+        public async Task<IActionResult> BuyTicket([Bind("Id,Date,Payment,Certificate,UserId,CupomId,EventId,Quantity")]UserEvent uservent)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(userEvent);
+                _context.Add(uservent);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("", "RegisterUser", null);
             }
-            return View(userEvent);
+            return RedirectToAction("", "UserContext", null);
         }
+
+        // [HttpPost]
+        // [ValidateAntiForgeryToken]
+        // public async Task<IActionResult> Create( UserEvent userEvent)
+        // {
+        //     if (ModelState.IsValid)
+        //     {
+        //         _context.Add(userEvent);
+        //         await _context.SaveChangesAsync();
+        //         return RedirectToAction(nameof(Index));
+        //     }
+        //     return View(userEvent);
+        // }
 
         // GET: Selling/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -140,9 +144,18 @@ namespace ProjEventWeb.Controllers
             {
                 return NotFound();
             }
-            return View(@event);
-        }
 
+            var userLogged = HttpContext.Session.GetString("Usuario");
+            var usuario = JsonConvert.DeserializeObject<UserProfile>(userLogged);
+
+            var obj = new UserEventViewModel
+            {
+                Event = @event,
+                UserEvent =  new UserEvent()
+            };
+
+            return View(@obj);
+        }
 
         // GET: Selling/Delete/5
         public async Task<IActionResult> Delete(int? id)
