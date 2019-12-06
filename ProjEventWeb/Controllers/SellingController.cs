@@ -57,11 +57,16 @@ namespace ProjEventWeb.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> BuyTicket([Bind("Id,Date,Payment,Certificate,UserId,CupomId,EventId,Quantity")]UserEvent uservent)
+        public async Task<IActionResult> BuyTicket([Bind("Id,Date,Payment,Certificate,UserId,CupomId,EventId,Quantity")]UserEvent userevent)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(uservent);
+                  var userLogged = HttpContext.Session.GetString("Usuario");
+                  var usuario = JsonConvert.DeserializeObject<UserProfile>(userLogged);
+
+                userevent.UserId = usuario.Id;
+
+                _context.Add(userevent);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("", "RegisterUser", null);
             }
