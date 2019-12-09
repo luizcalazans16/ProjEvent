@@ -16,7 +16,6 @@ namespace ProjEventWeb.Models
         public  string Password {get; set;}
         public string Course {get; set;}
         public bool Administrator {get; set;}
-        [NotMapped]
         public virtual ICollection<UserEvent> UserEvents { get; set; }
     }
 

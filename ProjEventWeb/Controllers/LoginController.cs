@@ -40,9 +40,10 @@ namespace ProjEventWeb.Controllers
 
                     return RedirectToAction("", "Login", null);
                 }
-                else
+                else 
                 {
                     HttpContext.Session.SetString("Usuario", JsonConvert.SerializeObject(user));
+                    var xyz = HttpContext.Session.GetString("Usuario");
                     if (user.Administrator)
                     {
                         return RedirectToAction("", "Administrator", null);

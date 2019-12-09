@@ -50,14 +50,14 @@ namespace ProjEventWeb.Controllers
             return View(y);
         }
 
-        // GET: Selling/Create
+        // GET: Selling/Create 
         public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> BuyTicket([Bind("Id,Date,Payment,Certificate,UserId,CupomId,EventId,Quantity")]UserEvent userevent)
+        public async Task<IActionResult> BuyTicket([Bind("Id,Date,Payment,Certificate,CupomId,EventId,Quantity")]UserEvent userevent)
         {
             if (ModelState.IsValid)
             {

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace ProjEventWeb.Models {
     public class Event {
@@ -9,5 +10,7 @@ namespace ProjEventWeb.Models {
         public string Category {get; set;}
         public string Details {get; set;}    
         public int Quantity {get; set;}    
+
+        public IEnumerable<UserEvent> UserEvents { get; set; }
     }
 }

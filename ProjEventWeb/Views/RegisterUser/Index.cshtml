@@ -1,4 +1,4 @@
-@model IEnumerable<ProjEventWeb.Models.UserProfile>
+@model ProjEventWeb.Models.UserEventListViewModel
 
 @{
     ViewData["Title"] = "Index";
@@ -8,9 +8,41 @@
 <!-- <p>
     <a style="font-family:verdana" asp-action="Create">Novo Cadastro</a>
 </p> -->
-<form asp-action="GetUserEvent">
     
-</form>
+
 <p style="font-family:verdana;"><a href="http://localhost:5001/Selling">Comprar entradas</a></p>
+<h3>Entradas adquiridas</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Descrição
+            </th>
+            <th>
+                Data
+            </th>
+            <th>
+                Tipo de atividade
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.UserEvent)
+        {
+            <tr>
+                <td>
+                    @Model.Event.Description
+                </td>
+                <td>
+                    @Model.Event.Date
+                </td>
+                <td>
+                    @Model.Event.Category
+                </td>
+            </tr>
+        }
+        </tbody>
+</table>
 
 

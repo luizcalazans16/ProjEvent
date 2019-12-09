@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ProjEventWeb.Models {
@@ -12,6 +13,8 @@ namespace ProjEventWeb.Models {
         public int EventId {get; set;}
         public int Quantity {get; set;}
 
+        public virtual UserProfile User { get; set; }
+        public virtual Event Event { get; set; }     
     }
 
 }

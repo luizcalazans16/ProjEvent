@@ -31,11 +31,15 @@ namespace ProjEventWeb.Models
             modelBuilder.Entity<Event>()
                         .ToTable("Events");
             modelBuilder.Entity<UserProfile>()
-                        .ToTable("Users");
+                        .ToTable("Users")
+                        .HasMany(o => o.UserEvents)
+                        .WithOne(i => i.User);
             modelBuilder.Entity<Cupom>()
                         .ToTable("Cupons");
             modelBuilder.Entity<UserEvent>()
-                        .ToTable("UserEvent");
+                        .ToTable("UserEvent")
+                        .HasOne(o => o.Event)
+                        .WithMany(o => o.UserEvents);
 
             OnModelCreatingPartial(modelBuilder);
         }

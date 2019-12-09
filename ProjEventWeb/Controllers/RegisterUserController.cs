@@ -19,8 +19,22 @@ namespace ProjEventWeb.Controllers
             _context = context;
         }
         //GET: Register
-        public IActionResult Index() {
-            return View();
+        public async Task<IActionResult> Index() {
+             var userLogged = HttpContext.Session.GetString("Usuario");
+             var usuario = JsonConvert.DeserializeObject<UserProfile>(userLogged);
+
+            var eventSold = from m in _context.Events
+                                where m.Id != 0
+                                select m;
+                                
+            var ue = await _context.UserProfiles.Include(o => o.UserEvents).ThenInclude(i => i.Event).FirstOrDefaultAsync(o => o.Id == usuario.Id);
+
+           var zz = new UserEventListViewModel {
+               
+               UserEvent = ue.UserEvents,
+               UserProfile = ue
+            };
+            return View(zz);
         }
 
         //GET: UserProfile/Create
@@ -39,7 +53,7 @@ namespace ProjEventWeb.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            HttpContext.Session.SetString("usuario", JsonConvert.SerializeObject(user));
+            HttpContext.Session.SetString("Usuario", JsonConvert.SerializeObject(user));
             return RedirectToAction("","Home",null);
         }
         //GET:      
