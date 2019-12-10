@@ -21,6 +21,9 @@
             <th>
                 Data
             </th>
+            <th>
+                Preço
+            </th>
         </tr>
     </thead>
 <tbody>
@@ -37,20 +40,29 @@
           <td>
               @Model.Event.Date
           </td>
+          <td>
+              @Model.Event.Price
+          </td>
       </tr>  
 
 </tbody>
 </table>
 <div class="form-group form-check">
-    <label class="form-check-label">Deseja receber certificado?
+    <label class="form-check-label">Deseja receber certificado?>
         <br>
-    <input class="form-check-input" type="checkbox" asp-for="UserEvent.Certificate" />
+    <input class="form-check-input" type="checkbox" asp-for"UserEvent.Certificate" />
     </label>
+</div>
+
+<div class="form-group">
+    <label name="Pagamento" class="control-label">Pagamento</label>
+    <input class="form-control"/>
 </div>
 
     <form asp-action="BuyTicket">
         @Html.Hidden("eventId", Model.Event.Id)
         @Html.Hidden("userId", Model.UserEvent.UserId)
+        @Html.Hidden("ceritificate", Model.UserEvent.Certificate)
         <input type="submit" value="Finalizar compra" class="btn btn-primary" />
     </form>
 

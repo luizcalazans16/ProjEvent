@@ -12,5 +12,6 @@ namespace ProjEventWeb.Models {
         public int Quantity {get; set;}    
 
         public IEnumerable<UserEvent> UserEvents { get; set; }
+        
     }
 }

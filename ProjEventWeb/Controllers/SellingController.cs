@@ -65,6 +65,7 @@ namespace ProjEventWeb.Controllers
                   var usuario = JsonConvert.DeserializeObject<UserProfile>(userLogged);
 
                 userevent.UserId = usuario.Id;
+                
 
                 _context.Add(userevent);
                 await _context.SaveChangesAsync();
@@ -72,19 +73,6 @@ namespace ProjEventWeb.Controllers
             }
             return RedirectToAction("", "UserContext", null);
         }
-
-        // [HttpPost]
-        // [ValidateAntiForgeryToken]
-        // public async Task<IActionResult> Create( UserEvent userEvent)
-        // {
-        //     if (ModelState.IsValid)
-        //     {
-        //         _context.Add(userEvent);
-        //         await _context.SaveChangesAsync();
-        //         return RedirectToAction(nameof(Index));
-        //     }
-        //     return View(userEvent);
-        // }
 
         // GET: Selling/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -157,6 +145,7 @@ namespace ProjEventWeb.Controllers
             {
                 Event = @event,
                 UserEvent =  new UserEvent()
+                
             };
 
             return View(@obj);

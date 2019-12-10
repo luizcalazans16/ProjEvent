@@ -11,7 +11,9 @@
     
 
 <p style="font-family:verdana;"><a href="http://localhost:5001/Selling">Comprar entradas</a></p>
-<h3>Entradas adquiridas</h3>
+<br/>
+
+<h4>Entradas adquiridas</h4>
 
 <table class="table">
     <thead>
@@ -32,13 +34,13 @@
         {
             <tr>
                 <td>
-                    @Model.Event.Description
+                    @item.Event.Description
                 </td>
                 <td>
-                    @Model.Event.Date
+                    @item.Event.Date
                 </td>
                 <td>
-                    @Model.Event.Category
+                    @item.Event.Category
                 </td>
             </tr>
         }

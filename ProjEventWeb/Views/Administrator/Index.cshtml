@@ -1,3 +1,4 @@
+@model IEnumerable<ProjEventWeb.Models.ManagementViewModel>
 
 @{
     ViewData["Title"] = "Administrator";
@@ -11,6 +12,51 @@
     <p style="font-family:verdana;"><a href="http://localhost:5001/UserProfile">Cadastro de usuários</a></p>
     <p style="font-family:verdana;"><a href="http://localhost:5001/Coupons">Cadastro de cupons</a></p>
     <p style="font-family:verdana;"><a href="http://localhost:5001/Selling">Compras</a></p>
-
 </div>
+<br/>
+<h4 text-align="center">Lista de participantes vs atividades</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Participante 
+            </th>
+            <th>
+                Evento
+            </th>
+            <th>
+                Data
+            </th>
+            <th>
+                Tipo de atividade
+            </th>
+            <th>
+                Certificado
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EventName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EventDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EventType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EventCertificate)
+            </td>
+        </tr>   
+        }
+    </tbody>
+
+</table>
 
